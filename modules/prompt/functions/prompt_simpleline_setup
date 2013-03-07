@@ -13,9 +13,9 @@
 function prompt_simpleline_precmd {
   # Check for untracked files or updated submodules since vcs_info does not.
   if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
-    branch_format="(${_prompt_simpleline_colors[1]}%b%f%u%c${_prompt_simpleline_colors[4]}●%f)"
+    branch_format="⟨${_prompt_simpleline_colors[1]}%b%f%u%c${_prompt_simpleline_colors[4]}•%f⟩"
   else
-    branch_format="(${_prompt_simpleline_colors[1]}%b%f%u%c)"
+    branch_format="⟨${_prompt_simpleline_colors[1]}%b%f%u%c⟩"
   fi
 
   zstyle ':vcs_info:*:prompt:*' formats "${branch_format}"
@@ -67,8 +67,8 @@ function prompt_simpleline_setup {
   #   %S - path in the repository
   local branch_format="(${_prompt_simpleline_colors[1]}%b%f%u%c)"
   local action_format="(${_prompt_simpleline_colors[5]}%a%f)"
-  local unstaged_format="${_prompt_simpleline_colors[2]}●%f"
-  local staged_format="${_prompt_simpleline_colors[5]}●%f"
+  local unstaged_format="${_prompt_simpleline_colors[2]}•%f"
+  local staged_format="${_prompt_simpleline_colors[5]}•%f"
 
   # Set vcs_info parameters.
   zstyle ':vcs_info:*' enable bzr git hg svn
@@ -83,9 +83,8 @@ function prompt_simpleline_setup {
   zstyle ':prezto:module:python:info:virtualenv' format '(%v)'
 
   # Define prompts.
-  PROMPT="
-${_prompt_simpleline_colors[3]}%n%f at ${_prompt_simpleline_colors[2]}%m%f in ${_prompt_simpleline_colors[5]}%~%f "'${vcs_info_msg_0_}'"
-"'$python_info[virtualenv]'"$ "
+  PROMPT="╭─ ${_prompt_simpleline_colors[3]}%n%f at ${_prompt_simpleline_colors[2]}%m%f ── ${_prompt_simpleline_colors[5]}%~%f "'${vcs_info_msg_0_}'" ────────────────
+╰─%f "'$python_info[virtualenv]'"$ "
   RPROMPT=''
 }
 
