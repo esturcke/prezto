@@ -76,7 +76,7 @@ function prompt_simpleline_setup {
   zstyle ':vcs_info:*:prompt:*' nvcsformats   ""
 
   # Define prompts.
-  PROMPT="${_prompt_simpleline_colors[1]}╭─ ${_prompt_simpleline_colors[2]}%n${_prompt_simpleline_colors[1]}·${_prompt_simpleline_colors[2]}%m ${_prompt_simpleline_colors[1]}── ${_prompt_simpleline_colors[3]}%~%f "'${vcs_info_msg_0_}'"${_prompt_simpleline_colors[1]}────────────────
+  PROMPT="${_prompt_simpleline_colors[1]}╭─ ${_prompt_simpleline_colors[3]}%n${_prompt_simpleline_colors[1]}·${_prompt_simpleline_colors[3]}%m ${_prompt_simpleline_colors[1]}── ${_prompt_simpleline_colors[2]}%~%f "'${vcs_info_msg_0_}'"${_prompt_simpleline_colors[1]}────────────────
 ${_prompt_simpleline_colors[1]}╰─ ${_prompt_simpleline_colors[4]}$%f "
   RPROMPT=''
 }
