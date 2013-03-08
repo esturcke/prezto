@@ -11,6 +11,18 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+
+# Update path
+path=(
+  ~/bin
+  ~/bin/*/
+  ~/perl5/perlbrew/bin
+  /usr/local/share/python3
+  /usr/local/share/python
+  $path
+)
+source ~/perl5/perlbrew/etc/bashrc
+
 function nopassword {
     cat ~/.ssh/id_rsa.pub | ssh $1 "mkdir -p ~/.ssh && cat - >> ~/.ssh/authorized_keys"
 }
