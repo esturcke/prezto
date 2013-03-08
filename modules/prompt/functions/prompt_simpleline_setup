@@ -13,18 +13,14 @@
 function prompt_simpleline_precmd {
   # Check for untracked files or updated submodules since vcs_info does not.
   if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
-    branch_format="⟨${_prompt_simpleline_colors[1]}%b%f%u%c${_prompt_simpleline_colors[4]}•%f⟩"
+    branch_format="⟨${_prompt_simpleline_colors[5]}%b%f%u%c${_prompt_simpleline_colors[4]}•%f⟩"
   else
-    branch_format="⟨${_prompt_simpleline_colors[1]}%b%f%u%c⟩"
+    branch_format="⟨${_prompt_simpleline_colors[5]}%b%f%u%c⟩"
   fi
 
   zstyle ':vcs_info:*:prompt:*' formats "${branch_format}"
 
   vcs_info 'prompt'
-
-  if (( $+functions[python-info] )); then
-    python-info
-  fi
 }
 
 function prompt_simpleline_setup {
@@ -42,19 +38,19 @@ function prompt_simpleline_setup {
   # Use extended color pallete if available.
   if [[ $TERM = *256color* || $TERM = *rxvt* ]]; then
     _prompt_simpleline_colors=(
-      "%F{81}"  # Turquoise
-      "%F{166}" # Orange
-      "%F{135}" # Purple
-      "%F{161}" # Hotpink
-      "%F{118}" # Limegreen
+      "%F{4}"  # Faded blue (line)
+      "%F{2}"  # Green (user name/host)
+      "%F{12}"  # Stronger blue (path) 
+      "%F{1}" # Orange (git status/prompt)
+      "%F{3}" # Yellow (git branch)
     )
   else
     _prompt_simpleline_colors=(
-      "%F{cyan}"
-      "%F{yellow}"
-      "%F{magenta}"
-      "%F{red}"
+      "%F{blue}"
       "%F{green}"
+      "%F{blue}"
+      "%F{red}"
+      "%F{yellow}"
     )
   fi
 
@@ -65,10 +61,10 @@ function prompt_simpleline_setup {
   #   %a - action (e.g. rebase-i)
   #   %R - repository path
   #   %S - path in the repository
-  local branch_format="(${_prompt_simpleline_colors[1]}%b%f%u%c)"
-  local action_format="(${_prompt_simpleline_colors[5]}%a%f)"
-  local unstaged_format="${_prompt_simpleline_colors[2]}•%f"
-  local staged_format="${_prompt_simpleline_colors[5]}•%f"
+  local branch_format="${_prompt_simpleline_colors[5]}⟨%b%u%c)%f"
+  local action_format="${_prompt_simpleline_colors[1]}|%a|${_prompt_simpleline_colors[5]} "
+  local unstaged_format="${_prompt_simpleline_colors[4]}•${_prompt_simpleline_colors[5]}"
+  local staged_format="${_prompt_simpleline_colors[2]}•${_prompt_simpleline_colors[5]}"
 
   # Set vcs_info parameters.
   zstyle ':vcs_info:*' enable bzr git hg svn
@@ -76,15 +72,12 @@ function prompt_simpleline_setup {
   zstyle ':vcs_info:*:prompt:*' unstagedstr "${unstaged_format}"
   zstyle ':vcs_info:*:prompt:*' stagedstr "${staged_format}"
   zstyle ':vcs_info:*:prompt:*' actionformats "${branch_format}${action_format}"
-  zstyle ':vcs_info:*:prompt:*' formats "${branch_format}"
+  zstyle ':vcs_info:*:prompt:*' formats "${branch_format} "
   zstyle ':vcs_info:*:prompt:*' nvcsformats   ""
 
-  # Set python-info parameters.
-  zstyle ':prezto:module:python:info:virtualenv' format '(%v)'
-
   # Define prompts.
-  PROMPT="╭─ ${_prompt_simpleline_colors[3]}%n%f at ${_prompt_simpleline_colors[2]}%m%f ── ${_prompt_simpleline_colors[5]}%~%f "'${vcs_info_msg_0_}'" ────────────────
-╰─%f "'$python_info[virtualenv]'"$ "
+  PROMPT="${_prompt_simpleline_colors[1]}╭─ ${_prompt_simpleline_colors[2]}%n${_prompt_simpleline_colors[1]}·${_prompt_simpleline_colors[2]}%m ${_prompt_simpleline_colors[1]}── ${_prompt_simpleline_colors[3]}%~%f "'${vcs_info_msg_0_}'"${_prompt_simpleline_colors[1]}────────────────
+${_prompt_simpleline_colors[1]}╰─ ${_prompt_simpleline_colors[4]}$%f "
   RPROMPT=''
 }
 
