@@ -5,6 +5,8 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
+autoload -U zmv
+
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
@@ -17,11 +19,27 @@ path=(
   ~/bin
   ~/bin/*/
   ~/perl5/perlbrew/bin
+  /usr/local/bin
   /usr/local/share/python3
   /usr/local/share/python
+  /usr/local/share/npm/bin
   $path
 )
 source ~/perl5/perlbrew/etc/bashrc
+
+fpath=(
+  ~/.zsh/completion
+  /usr/local/share/zsh-completions
+  $fpath
+)
+compinit
+
+export RBENV_ROOT=/usr/local/var/rbenv
+export SBT_OPTS=-XX:MaxPermSize=512m
+export PERL5LIB=~/Sourcefire/sf-mockup/lib
+export CVSROOT=esturcke@scm.sfeng.sourcefire.com:/usr/cvsroot
+
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 function nopassword {
     cat ~/.ssh/id_rsa.pub | ssh $1 "mkdir -p ~/.ssh && cat - >> ~/.ssh/authorized_keys"
@@ -32,5 +50,10 @@ function forgethost {
 }
 
 function swordfish {
-    openssl rand -base64 201 | perl -ne 's/\n//g; print $_;' | head -c $1 | pbcopy
+    openssl rand -base64 256 | perl -ne 's/\n//g; print $_;' | head -c $1 | pbcopy
 }
+
+# http://superuser.com/questions/337134/how-do-i-stop-apple-mail-from-opening-because-of-ical-appointments
+alias disable-mail.app="sudo chmod 000 /Applications/Mail.app/Contents/MacOS/Mail"
+alias photoshop="open -a Adobe\ Photoshop\ CS6"
+alias mark="open -a Marked.app"
