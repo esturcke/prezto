@@ -17,15 +17,12 @@ fi
 # Update path
 path=(
   ~/bin
-  ~/bin/*/
+  ~/bin/*
   ~/perl5/perlbrew/bin
   /usr/local/bin
-  /usr/local/share/python3
-  /usr/local/share/python
   /usr/local/share/npm/bin
   $path
 )
-source ~/perl5/perlbrew/etc/bashrc
 
 fpath=(
   ~/.zsh/completion
@@ -33,6 +30,10 @@ fpath=(
   $fpath
 )
 compinit
+
+typeset -A SF_PERL
+typeset -T SF_PERL_PATH SF_PERL
+SF_PERL+=(`print ~/Sourcefire/perl/*`)
 
 export RBENV_ROOT=/usr/local/var/rbenv
 export SBT_OPTS=-XX:MaxPermSize=512m
@@ -57,3 +58,9 @@ function swordfish {
 alias disable-mail.app="sudo chmod 000 /Applications/Mail.app/Contents/MacOS/Mail"
 alias photoshop="open -a Adobe\ Photoshop\ CS6"
 alias mark="open -a Marked.app"
+alias vi="vim"
+alias serve="python -m SimpleHTTPServer"
+source ~/perl5/perlbrew/etc/bashrc
+alias sfperl="SF_PERL+=(`print ~/Sourcefire/perl/*`); PERL5LIB=$PERL5LIB:$SF_PERL_PATH"
+alias ijulia="ipython notebook --profile julia"
+alias colors='for code in {000..255}; do print -nP -- "%F{$code}$code %f"; [ $((${code} % 16)) -eq 15 ] && echo; done'
