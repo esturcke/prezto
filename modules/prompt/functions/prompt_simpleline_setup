@@ -38,11 +38,12 @@ function prompt_simpleline_setup {
   # Use extended color pallete if available.
   if [[ $TERM = *256color* || $TERM = *rxvt* ]]; then
     _prompt_simpleline_colors=(
-      "%F{4}"  # Faded blue (line)
-      "%F{2}"  # Green (user name/host)
+      "%F{4}"   # Faded blue (line)
+      "%F{2}"   # Green (user name/host)
       "%F{12}"  # Stronger blue (path) 
-      "%F{1}" # Orange (git status/prompt)
-      "%F{3}" # Yellow (git branch)
+      "%F{1}"   # Orange (git status/prompt)
+      "%F{3}"   # Yellow (git branch)
+      "%F{3}"   # Yellow (time)
     )
   else
     _prompt_simpleline_colors=(
@@ -51,6 +52,7 @@ function prompt_simpleline_setup {
       "%F{blue}"
       "%F{red}"
       "%F{yellow}"
+      "%F{gray}"
     )
   fi
 
@@ -76,9 +78,9 @@ function prompt_simpleline_setup {
   zstyle ':vcs_info:*:prompt:*' nvcsformats   ""
 
   # Define prompts.
-  PROMPT="${_prompt_simpleline_colors[1]}╭─ ${_prompt_simpleline_colors[3]}%n${_prompt_simpleline_colors[1]}·${_prompt_simpleline_colors[3]}%m ${_prompt_simpleline_colors[1]}── ${_prompt_simpleline_colors[2]}%~%f "'${vcs_info_msg_0_}'"${_prompt_simpleline_colors[1]}────────────────
+  RPROMPT='${_prompt_simpleline_colors[6]}%T'
+  PROMPT="${_prompt_simpleline_colors[1]}╭─ ${_prompt_simpleline_colors[3]}%n${_prompt_simpleline_colors[1]}·${_prompt_simpleline_colors[3]}%m ${_prompt_simpleline_colors[1]}── ${_prompt_simpleline_colors[2]}%~%f "'${vcs_info_msg_0_}'"${_prompt_simpleline_colors[1]}───────────────
 ${_prompt_simpleline_colors[1]}╰─ ${_prompt_simpleline_colors[4]}$%f "
-  RPROMPT=''
 }
 
 prompt_simpleline_setup "$@"
